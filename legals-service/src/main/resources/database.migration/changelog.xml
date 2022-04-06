@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="create_table_legal" author="pollypuh@gmail.com">
+        <createTable tableName="t_legal">
+            <column name="f_id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="f_name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_unp" type="varchar(9)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="f_iban" type="varchar(28)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="f_residence" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_create_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_last_update_date" type="datetime">
+            </column>
+            <column name="f_employee_count" type="int">
+            </column>
+            <column name="f_note" type="varchar">
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

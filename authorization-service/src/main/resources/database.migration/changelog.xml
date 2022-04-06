@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="create_table_employee" author="viexost91@gmail.com">
+        <createTable tableName="t_employee">
+            <column name="f_id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="f_login" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_password" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_email" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_create_date" type="datetime"/>
+            <column name="f_status_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_failed_attempt" type="integer"/>
+            <column name="f_locked_account" type="boolean"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_status" author="viexost91@gmail.com">
+        <createTable tableName="t_employee_status">
+            <column name="f_id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="f_name" type="varchar">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_link_employee_status" author="viexost91@gmail.com">
+        <addForeignKeyConstraint baseTableName="t_employee"
+                                 baseColumnNames="f_status_id"
+                                 constraintName="status_id_constrain"
+                                 referencedTableName="t_employee_status"
+                                 referencedColumnNames="f_id"/>
+    </changeSet>
+
+    <changeSet id="create_status" author="viexost91@gmail.com">
+        <insert tableName="t_employee_status">
+            <column name="f_name" value="ACTIVE"/>
+        </insert>
+        <insert tableName="t_employee_status">
+            <column name="f_name" value="DISABLED"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="create_table_auth_log" author="viexost91@gmail.com">
+        <createTable tableName="t_authorization_log">
+            <column name="f_id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="f_username" type="varchar"/>
+            <column name="f_date_of_auth" type="datetime"/>
+            <column name="f_date_of_logout" type="datetime"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_session" author="viexost91@gmail.com">
+        <createTable tableName="t_session">
+            <column name="f_id_session" type="varchar"/>
+            <column name="f_username" type="varchar"/>
+            <column name="f_date_of_start" type="datetime"/>
+            <column name="f_date_of_finish" type="datetime"/>
+            <column name="f_status_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_status_session" author="viexost91@gmail.com">
+        <createTable tableName="t_session_status">
+            <column name="f_id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="f_name" type="varchar">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_link_session_status" author="viexost91@gmail.com">
+        <addForeignKeyConstraint baseTableName="t_session"
+                                 baseColumnNames="f_status_id"
+                                 constraintName="status_session_id_constrain"
+                                 referencedTableName="t_session_status"
+                                 referencedColumnNames="f_id"/>
+    </changeSet>
+
+    <changeSet id="create_status_session" author="viexost91@gmail.com">
+        <insert tableName="t_session_status">
+            <column name="f_name" value="ACTIVE"/>
+        </insert>
+        <insert tableName="t_session_status">
+            <column name="f_name" value="EXPIRED"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

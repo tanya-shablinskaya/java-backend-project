@@ -1,0 +1,48 @@
+version: "3.9"
+services:
+  postgres_auth:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "auth"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "qwerty"
+    volumes:
+      - ./data:/var/lib/postgresql/data_auth
+    ports:
+      - "5432:5432"
+  postgres_legals:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "legals"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "qwerty"
+    volumes:
+      - ./data:/var/lib/postgresql/data_legals
+    ports:
+      - "5433:5433"
+    command:
+      -p 5433
+  postgres_employees:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "employees"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "qwerty"
+    volumes:
+      - ./data:/var/lib/postgresql/data_employees
+    ports:
+      - "5434:5434"
+    command:
+      -p 5434
+  postgres_applications:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "applications"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "qwerty"
+    volumes:
+      - ./data:/var/lib/postgresql/data_applications
+    ports:
+      - "5435:5435"
+    command:
+      -p 5435

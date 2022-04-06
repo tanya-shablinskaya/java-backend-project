@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="create_table_application" author="viexost91@gmail.com">
+        <createTable tableName="t_application">
+            <column name="f_id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="f_application_id" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_currency_from_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_currency_to_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_employee_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_status_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_percent" type="decimal">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_create_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="f_last_update_date" type="datetime">
+            </column>
+            <column name="f_legal_id" type="bigint">
+            </column>
+            <column name="f_note" type="varchar">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_currency" author="viexost91@gmail.com">
+        <createTable tableName="t_currency">
+            <column name="f_id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="f_name" type="varchar"/>
+            <column name="f_currency_code" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_link_application_currency_from" author="viexost91@gmail.com">
+        <addForeignKeyConstraint baseTableName="t_application"
+                                 baseColumnNames="f_currency_from_id"
+                                 constraintName="currency_from_application_constrain"
+                                 referencedTableName="t_currency"
+                                 referencedColumnNames="f_id"/>
+    </changeSet>
+
+    <changeSet id="add_link_application_currency_to" author="viexost91@gmail.com">
+        <addForeignKeyConstraint baseTableName="t_application"
+                                 baseColumnNames="f_currency_to_id"
+                                 constraintName="currency_to_application_constrain"
+                                 referencedTableName="t_currency"
+                                 referencedColumnNames="f_id"/>
+    </changeSet>
+
+    <changeSet id="create_table_application_log" author="pollypuh@gmail.com">
+        <createTable tableName="t_application_log">
+            <column name="f_id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="f_status_id_before" type="bigint">
+            </column>
+            <column name="f_status_id_after" type="bigint">
+            </column>
+            <column name="f_application_id" type="bigint">
+            </column>
+            <column name="f_create_date" type="datetime">
+            </column>
+            <column name="f_user_id" type="bigint">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_application_status" author="pollypuh@gmail.com">
+        <createTable tableName="t_status">
+            <column name="f_id" type="bigserial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="f_name" type="varchar">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_link_application_status" author="pollypuh@gmail.com">
+        <addForeignKeyConstraint baseTableName="t_application"
+                                 baseColumnNames="f_status_id"
+                                 constraintName="status_application_constrain"
+                                 referencedTableName="t_status"
+                                 referencedColumnNames="f_id"/>
+    </changeSet>
+
+    <changeSet id="add_link_application_log_status_before" author="pollypuh@gmail.com">
+        <addForeignKeyConstraint baseTableName="t_application_log"
+                                 baseColumnNames="f_status_id_before"
+                                 constraintName="status_before_application_log_constrain"
+                                 referencedTableName="t_status"
+                                 referencedColumnNames="f_id"/>
+    </changeSet>
+
+    <changeSet id="add_link_application_log_status_after" author="pollypuh@gmail.com">
+        <addForeignKeyConstraint baseTableName="t_application_log"
+                                 baseColumnNames="f_status_id_after"
+                                 constraintName="status_after_application_log_constrain"
+                                 referencedTableName="t_status"
+                                 referencedColumnNames="f_id"/>
+    </changeSet>
+
+    <changeSet id="create_status" author="viexost91@gmail.com">
+        <insert tableName="t_status">
+            <column name="f_name" value="NEW"/>
+        </insert>
+        <insert tableName="t_status">
+            <column name="f_name" value="IN_PROGRESS"/>
+        </insert>
+        <insert tableName="t_status">
+            <column name="f_name" value="DONE"/>
+        </insert>
+        <insert tableName="t_status">
+            <column name="f_name" value="REJECTED"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="create_currency" author="viexost91@gmail.com">
+        <insert tableName="t_currency">
+            <column name="f_name" value="BYN"/>
+            <column name="f_currency_code" value="933"/>
+        </insert>
+        <insert tableName="t_currency">
+            <column name="f_name" value="USD"/>
+            <column name="f_currency_code" value="840"/>
+        </insert>
+        <insert tableName="t_currency">
+            <column name="f_name" value="EUR"/>
+            <column name="f_currency_code" value="978"/>
+        </insert>
+        <insert tableName="t_currency">
+            <column name="f_name" value="RUB"/>
+            <column name="f_currency_code" value="643"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
